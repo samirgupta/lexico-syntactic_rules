@@ -1,0 +1,87 @@
+###Before|after,upon vbg fix
+RuleID : advcl_to_nmod_before
+Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
+Cond_2 : {}=N1 >mark {lemma:before}
+Action_1 : N0 >> nmod:before >> N1
+
+###Before|after,upon vbg fix
+RuleID : advcl_to_nmod_after
+Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
+Cond_2 : {}=N1 >mark {lemma:after}
+Action_1 : N0 >> nmod:after >> N1
+
+###Before|after,upon vbg fix
+RuleID : advcl_to_nmod_upon
+Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
+Cond_2 : {}=N1 >mark {lemma:upon}
+Action_1 : N0 >> nmod:upon >> N1
+
+
+####E1 after E2
+RuleID : temporal_after_1
+Cond_1 : {}=N2 >/nmod:after|nmod:upon/ {}=N1
+Cond_2 : {}=N1 >/(case|mark)/ {lemma:/after|upon/}=N0
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+####E1 before E2
+RuleID : temporal_before_1
+Cond_1 : {}=N1 >/nmod:before/ {}=N2
+Cond_2 : {}=N2 >/(case|mark)/ {lemma:/before/}=N0
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+
+####E1 following E2
+RuleID : temporal_following
+Cond_1 : {}=N2 >/nmod:following/ {}=N1
+Cond_2 : {}=N1 >/(case|mark)/ {lemma:/follow|following/}=N0
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+####E1 followed by E2
+RuleID : temporal_following
+Cond_1 : {pos:VBN;lemma:follow}=N0
+Cond_2 : {}=N0 >/nsubjpass/ {}=N1
+Cond_2 : {}=N0 >/nmod:agent/ {}=N2
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+####E2 follows E1
+RuleID : temporal_following_2
+Cond_1 : {pos:VBZ;lemma:follow}=N0
+Cond_2 : {}=N0 >/nsubj/ {}=N1
+Cond_2 : {}=N0 >/dobj/ {}=N2
+Action_1 : N0 >> arg0_tmp >> N2
+Action_2 : N0 >> arg1_tmp >> N1
+
+####E1 leading to E2
+RuleID : temporal_leading_to_1
+Cond_1 : {}=N1 >/advcl|xcomp|dep/ {lemma:/lead|result/;pos:VBG}=N0
+Cond_2 : {}=N0 >/nmod:to|nmod:in/ {}=N2
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+####E1 thereby VBG  E2
+RuleID : temporal_thereby_VBG_1
+Cond_1 : {}=N1 >/advcl|xcomp|dep/ {pos:VBG}=N0
+Cond_2 : {}=N0 > /mark|advmod/ {lemma:thereby}=N3
+#Cond_2 : {}=N0 >/dobj/ {}=N2
+Action_1 : N3 >> arg0_tmp >> N1
+Action_2 : N3 >> arg1_tmp >> N0
+
+####E1 leading to E2
+RuleID : temporal_leading_to_2
+Cond_0 : {}=N1 >dobj {}=N3
+Cond_1 : {}=N3 >/acl/ {lemma:lead;pos:VBG}=N0
+Cond_2 : {}=N0 >/nmod:to/ {}=N2
+Action_1 : N0 >> arg0_tmp >> N1
+Action_2 : N0 >> arg1_tmp >> N2
+
+####E1 resulting in E2
+RuleID : temporal_leading_to_3
+Cond_0 : {}=N1 >dobj {}=N3
+Cond_1 : {}=N1 >/advcl|xcomp|dep/ {lemma:result;pos:VBG}=N0
+Cond_2 : {}=N0 >/nmod:in/ {}=N2
+Action_1 : N0 >> arg0_tmp >> N3
+Action_2 : N0 >> arg1_tmp >> N2
