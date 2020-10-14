@@ -8,7 +8,7 @@ Then the actions are applied to add new edges between the named nodes.
 Each Cond_# is Semregex Pattern
 Each Action_# adds edges to comparison components
 
-####arg0_cmo points to the aspect 
+####arg0_cmp points to the aspect 
 ####arg1/2_cmp points to the entities
 ####governor of arg edges is the scale
 #####README ENDS####
