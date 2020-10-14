@@ -1,0 +1,25 @@
+###Use open_ie rules before this
+
+########X regulate_trigger_VB Y########
+RuleID : regulate_trigger_openIE_1
+Cond_0 : {lemma:/(abrogate|abolish|accelerate|alter|annul|antagonise|attenuate|augment|block|trigger|compromise|cause|change|confer|control|decrease|deregulate|diminish|disrupt|downregulate|down-regulate|elevate|eliminate|enable|enhance|facilitate|impact|impair|increase|induce|inhibit|initiate|limit|maintain|mediate|mitigate|modulate|predict|prevent|promote|reduce|regulate|repress|restore|restrict|sensitize|stabilize|stimulate|suppress|target|upregulate|up-regulate|weaken|interfere)/}=N0
+Cond_1 : {}=N0 >arg0_opn {}=N1
+Cond_2 : {}=N0 >arg1_opn {}=N2
+Action_1 : N0 >> arg0_reg >> N1
+Action_2 : N0 >> arg1_reg >> N2
+
+########X regulate_trigger_NN Y########
+RuleID : regulate_trigger_openIE_2
+Cond_0 : {lemma:/(abolishment|acceleration|alteration|attenuation|deregulation|diminishment|disruption|downregulation|down-regulation|elevation|elimination|enhancement|impairment|induction|inhibition|initiation|mediation|mitigation|modulation|prediction|prevention|promotion|reduction|regulation|repression|restriction|sensitization|stabilization|stimulation|suppression|upregulation|up-regulation|weakened)/}=N0
+Cond_1 : {}=N0 >arg0_opn {}=N1
+Cond_2 : {}=N0 >arg1_opn {}=N2
+Action_1 : N0 >> arg0_reg >> N1
+Action_2 : N0 >> arg1_reg >> N2
+
+########X isa regulator for Y#######
+RuleID : regulate_trigger__3
+Cond_0 : {lemma:/(deregulator|disruptor|downregulator|down-regulator|enhancer|inducer|inhibitor|initiator|mediator|mitigator|modulator|predictor|preventer|promoter|reducer|regulator|repressor|stimulator|suppressor|upregulator|up-regulator)/}=N0
+Cond_1 : {}=N0 >nsubj {}=N1
+Cond_2 : {}=N0 >/nmod:of|nmod:for/ {}=N2
+Action_1 : N0 >> arg0_reg >> N1
+Action_2 : N0 >> arg1_reg >> N2
