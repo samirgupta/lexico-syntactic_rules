@@ -66,3 +66,17 @@ Cond_0 : {tag:/VB.*/;lemma:/encode/}=N0
 Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
 Cond_2 : {}=N0 >dobj {}=N2
 Action_1 : N1 >> is_a >> N2
+
+RuleID : memberCollection_1
+Cond_1 : {tag:NNS}=N0 >/(nmod:such_as|nmod:including)/ {}=N1
+Action_1 : N0 >> member_collection >> N1
+
+RuleID : memberCollection_collective_1
+Cond_1 : {tag:NN;lemma:/(range|number|variety)/}=N0 >/(nmod:such_as|nmod:including)/ {}=N1
+Action_1 : N0 >> member_collection >> N1
+
+RuleID : memberCollection_2
+Cond_1 : {lemma:/(range|number|variety)/}=N0
+Cond_2 : {}=N0 >/nmod:of/ {tag:NNS}=N1
+Cond_1 : {}=N1 >/(nmod:such_as|nmod:including)/ {}=N2
+Action_1 : N0 >> member_collection >> N2
