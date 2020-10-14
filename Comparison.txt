@@ -14,136 +14,7 @@ Each Action_# adds edges to comparison components
 #####README ENDS####
 
 
-
-###PREPOCESSING RULES START######
-
-#########COPY nmod:in when xcomp from FOUND_IN to higher/lower#######
-
-####Copy xcomp: In Y, X was found be higher than Z#####
-RuleID : copy_xcomp_1
-Cond_1 : {word:/(higher|lower|high|low)/}=N0
-Cond_2 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N1
-Cond_3 : {}=N1 >xcomp {}=N0
-Cond_4 : {}=N1 >/nmod:in/ {}=N3
-Action_1 : N0 >> nmod:in >> N3
-
-####Copy xcomp: In Y, X was found be increased than Z#####
-RuleID : copy_xcomp_1
-Cond_1 : {pos:VBN;lemma:/.*(increase|decrease|express|silence|reduce|elevate|change|regulate)/}=N0
-Cond_2 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N1
-Cond_3 : {}=N1 >xcomp {}=N0
-Cond_4 : {}=N1 >/nmod:in/ {}=N3
-Action_1 : N0 >> nmod:in >> N3
-
-####Copy xcomp: X was expressed X-fold lower#####
-RuleID : copy_xcomp_2
-Cond_1 : {pos:VBN;lemma:/.*(increase|decrease|express|silence|reduce|elevate|change|regulate)/}=N0
-Cond_2 : {tag:JJR}=N1
-Cond_3 : {}=N0 >xcomp {}=N1
-Cond_4 : {}=N1 >/nmod:in/ {}=N3
-Action_1 : N0 >> nmod:in >> N3
-
-####nmod:in->acl=> nmod_acl:in
-####let-7c expression is higher in clinical PCa specimens compared to normal.
-RuleID : fix_cmp_1
-Cond_1 : {}=N0 >/nmod:in/ {}=N1
-Cond_2 : {}=N1 >acl {word:compared}=N2
-Action_1 : N0 >> nmod_acl:in >> N2
-
-
-####nmod:in->nmod:(in|than) => nmod:than_added (if case to than) 
-####mir-21 was upregulated in bladder cancer specimens than control.
-RuleID : fix_cmp_2
-Cond_1 : {}=N0 >/nmod:in/ {}=N1
-Cond_2 : {}=N1 >/(nmod:in|nmod:than)/ {}=N2
-Cond_3 : {}=N2 >/case/ {word:than}
-#Action_1 : N0 >> nmod:than_added >> N2
-Action_1 : N0 >> nmod:than >> N2
-
-
-#####VB > advcl > VBG > mark > than => VB >> nmod:than
-RuleID : fix_comp_3
-Cond_1 : {}=N0 >advcl {tag:/VB.*/}=N1
-Cond_2 : {}=N1 >mark {word:than}
-Action_1 : N0 >> nmod:than >> N1
-
-#####nmod:to/with -> X ->case > comparison => nmod:compared_to/with#####
-RuleID : fix_in_comp_1
-Cond_1 : {tag:/(JJ|JJR|RBR)/}=N0
-Cond_2 : {}=N0 >/nmod:to/ {}=N1
-Cond_3 : {}=N1 >case {word:/(compare|comparison|compared)/}=N2
-Action_1 : N0 >> nmod:compared_to >> N1
-
-RuleID : fix_in_comp_2
-Cond_1 : {tag:/(JJ|JJR|RBR)/}=N0
-Cond_2 : {}=N0 >/nmod:with/ {word:/(compare|comparison|compared)/}=N1
-Cond_3 : {}=N1 >case {}=N2
-Action_1 : N0 >> nmod:compared_with >> N1
-
-####X >acl > compared > nmod:to|with > Y => X >> nmod:compared_with|to
-RuleID : fix_in_comp_3
-Cond_1 : {word:/(compared|compared)/}=N0
-Cond_2 : {}=N0 >/nmod:to/ {}=N1
-Cond_3 : {}=N2 >acl {}=N0
-Action_1 : N2 >> nmod:compared_to >> N1
-
-RuleID : fix_in_comp_4
-Cond_1 : {word:/(compared|compared)/}=N0
-Cond_2 : {}=N0 >/nmod:with/ {}=N1
-Cond_3 : {}=N2 >acl {}=N0
-Action_1 : N2 >> nmod:compared_with >> N1
-
-####nmod:with_respect_to >> nmod:compared_to####
-RuleID : fix_respect_1
-Cond_1 : {}=N0 >/nmod:with_respect_to/ {}=N1
-Action_1 : N0 >> nmod:compared_to >> N1
-  
-RuleID : fix_respect_1
-Cond_1 : {}=N0 >/nmod:with_respect_with/ {}=N1
-Action_1 : N0 >> nmod:compared_with >> N1
-
-####RBR<advmod<JJ<amod<X prop####
-RuleID : advmod_prop_1
-Cond_1 : {}=N0 >amod {tag:JJ}=N1
-Cond_2 : {}=N1 >advmod {tag:RBR}=N2
-Action_1 : N0 >> advmod >> N2
-
-
-####convert relative to nmod:compared_to####
-RuleID : relative_fix_1
-Cond_1 : {lemma:relative}=N0
-Cond_2 : {}=N1 >/nmod:(to|with)/ {}=N2
-Cond_3 : {}=N2 >case {}=N0
-Action_1 : N1 >> nmod:compared_with >> N2
-
-####convert in relation to nmod:compared_to####
-RuleID : relative_fix_2
-Cond_1 : {word:relation}=N0
-Cond_2 : {}=N0 >/nmod:(to|with)/ {}=N1
-Cond_3 : {}=N2 >/nmod:in/ {}=N0
-Action_1 : N2 >> nmod:compared_with >> N1
-
-####convert JJ_relative to nmod:compared_to####
-RuleID : relative_fix_3
-Cond_1 : {lemma:relative;tag:JJ}=N0
-Cond_2 : {}=N1 >/amod/ {}=N0
-Cond_3 : {}=N0 >/nmod:(to|with)/ {}=N2
-Action_1 : N1 >> nmod:compared_with >> N2
-
-####advcl->compared fix####
-RuleID : advcl_comp_fix_1
-Cond_1 : {word:compared}=N0
-Cond_2 : {}=N1 >/advcl|dep/ {}=N0
-Cond_3 : {}=N0 >/nmod:(with|to)/ {}=N3
-Action_1 : N1 >> advcl:compared_with >> N3
-
-
-###PREPOCESSING RULES END######
-
 ###COMPARISON PATTERNS START#####
-####arg0_cmo points to the aspect 
-####arg1/2_cmp points to the entities
-####governor of arg edges is the scale
 
 ###Non-Equal Gradable Patterns START######
 
@@ -530,7 +401,7 @@ Action_1 : N3 >> arg0_cmp >> N2
 Action_2 : N3 >> arg1_cmp >> N1
 Action_3 : N3 >> arg2_cmp >> N4
 
-####Comparison 2.1: Y VB.* sig X than/compared Z
+####Comparison 2.1: Y VB.* significant X than/compared Z
 RuleID : cmp_JJR_1_sig
 Cond_1 : {tag:/(VB|VBD|VBG|VBZ|VBP)/}=N0
 Cond_2 : {}=N0 >nsubj {}=N1
@@ -541,7 +412,7 @@ Action_1 : N3 >> arg0_cmp >> N2
 Action_2 : N3 >> arg1_cmp >> N1
 Action_3 : N3 >> arg2_cmp >> N4
 
-####Comparison 2.1_1:there was sig X prep Ythan/compared Z
+####Comparison 2.1_1:there was significant X prep Ythan/compared Z
 RuleID : cmp_JJR_1_sig
 Cond_1 : {tag:/(VB|VBD|VBG|VBZ|VBP)/}=N0
 Cond_2 : {}=N0 >nsubj {}=N1
