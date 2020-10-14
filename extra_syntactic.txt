@@ -1,0 +1,68 @@
+####Copular Rule:X is a Y####
+RuleID : isa_1
+Cond_0 : {}=N0 >nsubj {}=N1
+Cond_1 : {}=N0 >cop {}=N2
+Cond_1 : {}=N0 >det {lemma:/(a|an|the)/}=N3
+Cond_2 : {}=N0 !> /case/ {tag:IN}
+Action_1 : N1 >> is_a >> N0
+Action_2 : N2 >> arg0_isa >> N1
+Action_3 : N2 >> arg1_isa >> N0
+
+####Copular Rule:X are Y####
+RuleID : isa_2
+Cond_0 : {pos:/NN|NNS/}=N0 >nsubj {}=N1
+Cond_1 : {}=N0 >cop {word:are}=N2
+Cond_2 : {}=N0 !> /case/ {tag:IN}
+Action_1 : N1 >> is_a >> N0
+Action_2 : N2 >> arg0_isa >> N1
+Action_3 : N2 >> arg1_isa >> N0
+
+####Appos Rule####
+RuleID : isa_2
+Cond_0 : {}=N0 >/(appos|appos_added)/ {}=N1
+Action_1 : N0 >> is_a >> N1
+
+####X act|serve as a Y####
+RuleID : isa_as_1
+Cond_0 : {tag:/VB.*/;lemma:/(serve|act|function|known)/}=N0
+Cond_1 : {}=N0 >nsubj {}=N1
+Cond_2 : {}=N0 >/nmod:as/ {}=N2
+Cond_3 : {}=N2 >det {lemma:/(a|an|the)/}=N3
+Action_1 : N0 >> arg0_isa >> N1
+Action_2 : N0 >> arg1_isa >> N2
+Action_3 : N1 >> is_a >> N2
+
+####NP VB X as a Y####
+RuleID : isa_as_2
+Cond_0 : {tag:/VB.*/}=N0
+Cond_1 : {}=N0 >dobj {}=N1
+Cond_2 : {}=N0 >/nmod:as/ {}=N2
+Cond_3 : {}=N2 >det {lemma:/(a|an|the)/}=N3
+Action_1 : N0 >> arg0_isa >> N1
+Action_2 : N0 >> arg1_isa >> N2
+Action_3 : N1 >> is_a >> N2
+
+####X act|serve as Y_NNS####
+RuleID : isa_as_1_1
+Cond_0 : {tag:/VB.*/;lemma:/(serve|act|function|known)/}=N0
+Cond_1 : {}=N0 >nsubj {}=N1
+Cond_2 : {}=N0 >/nmod:as/ {tag:NNS}=N2
+Action_1 : N0 >> arg0_isa >> N1
+Action_2 : N0 >> arg1_isa >> N2
+Action_3 : N1 >> is_a >> N2
+
+####NP VB X as  Y_NNS####
+RuleID : isa_as_2_1
+Cond_0 : {tag:/VB.*/}=N0
+Cond_1 : {}=N0 >dobj {}=N1
+Cond_2 : {}=N0 >/nmod:as/ {tag:NNS}=N2
+Action_1 : N0 >> arg0_isa >> N1
+Action_2 : N0 >> arg1_isa >> N2
+Action_3 : N1 >> is_a >> N2
+
+########X encoding Y########
+RuleID : encoding_1
+Cond_0 : {tag:/VB.*/;lemma:/encode/}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >dobj {}=N2
+Action_1 : N1 >> is_a >> N2
