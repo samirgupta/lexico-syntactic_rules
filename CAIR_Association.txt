@@ -1,0 +1,40 @@
+####X is associated with Y######
+RuleID : association_with_1
+Cond_1 : {pos:/VB.*/;lemma:/(associate|correlate)/}=N0
+Cond_1 : {}=N0 >/(nsubjpass|nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:with/ {}=N2
+Action_1 : N0 >> arg0_ass >> N1
+Action_2 : N0 >> arg1_ass >> N2
+
+###Association of X with Y###
+RuleID : association_with_2
+Cond_1 : {pos:/(NN|NNS)/;lemma:/(associate|correlate|association|correlation)/}=N0
+Cond_1 : {}=N0 >/nmod:of/ {}=N1
+Cond_2 : {}=N0 >/nmod:with/ {}=N2
+Action_1 : N0 >> arg0_ass >> N1
+Action_2 : N0 >> arg1_ass >> N2
+
+####X is linked to Y######
+RuleID : association_to_1
+Cond_1 : {pos:/VBN/;lemma:/(link)/}=N0
+Cond_1 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:to/ {}=N2
+Action_1 : N0 >> arg0_ass >> N1
+Action_2 : N0 >> arg1_ass >> N2
+
+###Association between X and Y###
+RuleID : association_between_1
+Cond_1 : {pos:/(NN|NNS)/;lemma:/(association|correlation)/}=N0
+Cond_2 : {}=N0 >/nmod:between/ {}=N1
+Cond_3 : {}=N1 >/conj:and/ {}=N2
+Action_1 : N0 >> arg0_ass >> N1
+Action_2 : N0 >> arg1_ass >> N2
+
+###Association was found between X and Y###
+RuleID : association_between_1
+Cond_1 : {pos:/(NN|NNS)/;lemma:/(association|correlation)/}=N0
+Cond_2 : {tag:VBN}=N1 >/(nsubj|nsubjpass)/ {}=N0
+Cond_2 : {}=N1 >/nmod:between/ {}=N2
+Cond_3 : {}=N2 >/conj:and/ {}=N3
+Action_1 : N0 >> arg0_ass >> N2
+Action_2 : N0 >> arg1_ass >> N3
