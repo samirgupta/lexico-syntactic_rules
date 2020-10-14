@@ -1,0 +1,5 @@
+########Reduced relative clause:add nsubj########
+RuleID : openIE_redrcl_addsubj_1
+Cond_0 : {tag:/VBG/}=N0
+Cond_1 : {}=N0 <acl {tag:/(NN|NNS)/}=N1
+Action_1 : N0 >> nsubj >> N1
