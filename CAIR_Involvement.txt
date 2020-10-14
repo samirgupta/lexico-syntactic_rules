@@ -49,7 +49,7 @@ Cond_3 : {}=N2 >/nmod:in/ {}=N3
 Action_1 : N0 >> arg0_inv >> N1
 Action_2 : N0 >> arg1_inv >> N3
 
-######X has a role in Y; alt########
+######X has a role in Y########
 RuleID : involvement_role_2
 Cond_1 : {tag:/VB.*/;lemma:/(has|have|had)/}=N2
 Cond_1 : {}=N2 >/dobj/ {lemma:role}=N0
@@ -92,7 +92,7 @@ Cond_3 : {}=N2 >/nmod:on/ {}=N3
 Action_1 : N0 >> arg0_inv >> N1
 Action_2 : N0 >> arg1_inv >> N3
 
-######X has an effect on Y; alt########
+######X has an effect on Y########
 RuleID : involvement_on_2
 Cond_1 : {tag:/VB.*/;lemma:/(has|have|had)/}=N2
 Cond_2 : {}=N2 >/dobj/ {lemma:/(effect|influence)/}=N0
