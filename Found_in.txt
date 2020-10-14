@@ -1,0 +1,74 @@
+####X is expressed in Y#####
+RuleID : expressionIn_1
+Cond_1 : {pos:VBN;lemma:/.*(increase|decrease|express|silence|reduce|elevate|change|regulate)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:in/ {}=N2
+Cond_10 : {}=N0 !>/.*_cmp/ {}
+Action_1 : N0 >> arg0_fnd >> N1
+Action_2 : N0 >> arg1_fnd >> N2
+
+####X is expressed in Y#####
+RuleID : expressionIn_2
+Cond_1 : {pos:/(JJ|JJR)/;lemma:/(high|low|higher|lower)/}=N0
+Cond_2 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:in/ {}=N2
+Cond_10 : {}=N0 !>/.*_cmp/ {}
+Action_1 : N0 >> arg0_fnd >> N1
+Action_2 : N0 >> arg1_fnd >> N2
+
+####X is found in Y#####
+RuleID : foundIn_1
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|nsubj|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:in/ {}=N2
+Cond_10 : {}=N0 !>/.*_cmp/ {}
+Action_1 : N0 >> arg0_fnd >> N1
+Action_2 : N0 >> arg1_fnd >> N2
+
+####X in Y was found#####
+RuleID : foundIn_2
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_3 : {}=N1 >/nmod:in/ {}=N2
+Cond_10 : {}=N0 !>/.*_cmp/ {}
+Action_1 : N0 >> arg0_fnd >> N1
+Action_2 : N0 >> arg1_fnd >> N2
+
+####We found X in Y#####
+RuleID : foundIn_3
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/dobj/ {}=N1
+Cond_3 : {}=N1 >/nmod:in/ {}=N2
+Cond_10 : {}=N0 !>/.*_cmp/ {}
+Action_1 : N0 >> arg0_fnd >> N1
+Action_2 : N0 >> arg1_fnd >> N2
+
+####High X is found in Y#####
+RuleID : EXPfoundIn_1
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|nsubj|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:in/ {}=N2
+Cond_4 : {}=N1 >amod {tag:/(JJ|JJR|VBN)/}=N3
+Cond_10 : {}=N3 !>/.*_cmp/ {}
+Action_1 : N3 >> arg0_exp >> N1
+Action_2 : N3 >> arg1_exp >> N2
+
+####High X in Y was found#####
+RuleID : EXPfoundIn_2
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_3 : {}=N1 >/nmod:in/ {}=N2
+Cond_4 : {}=N1 >amod {tag:/(JJ|JJR|VBN)/}=N3
+Cond_10 : {}=N3 !>/.*_cmp/ {}
+Action_1 : N3 >> arg0_exp >> N1
+Action_2 : N3 >> arg1_exp >> N2
+
+####We found high X in Y#####
+RuleID : EXPfoundIn_3
+Cond_1 : {word:/(found|noted|detected|observed|discovered|occurred|occur|occurs)/}=N0
+Cond_2 : {}=N0 >/dobj/ {}=N1
+Cond_3 : {}=N1 >/nmod:in/ {}=N2
+Cond_4 : {}=N1 >amod {tag:/(JJ|JJR|VBN)/}=N3
+Cond_10 : {}=N3 !>/.*_cmp/ {}
+Action_1 : N3 >> arg0_exp >> N1
+Action_2 : N3 >> arg1_exp >> N2
