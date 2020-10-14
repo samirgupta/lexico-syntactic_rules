@@ -1,0 +1,10 @@
+RuleID : prop_isa_arg_1
+Cond_0 : {}=N0 >/arg.*/=R1 {}=N1
+Cond_1 : {}=N1 <is_a {}=N2
+Action_1 : N0 >> R1_prop_isa >> N2
+
+
+RuleID : prop_mc_arg
+Cond_0 : {}=N0 >/arg.*/=R1 {}=N1
+Cond_1 : {}=N1 >member_collection {}=N2
+Action_1 : N0 >> R1_prop_mc >> N2
