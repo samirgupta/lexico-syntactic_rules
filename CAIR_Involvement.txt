@@ -1,0 +1,110 @@
+####X contribute to Y######
+RuleID : involvement_to_1
+Cond_1 : {pos:/VB.*/;lemma:contribute}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:to/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+####contribution of X to Y######
+RuleID : involvement_to_2
+Cond_1 : {pos:/NN/;word:/(?i:contribution)/}=N0
+Cond_1 : {}=N0 >/(nmod:of|nmod:poss|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:to/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+
+####X is invovlved in Y######
+RuleID : involvement_in_1
+Cond_1 : {pos:/VBN/;lemma:/(involve|implicate)/}=N0
+Cond_1 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:in/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+####Involvement of X in Y######
+RuleID : involvement_in_2
+Cond_1 : {pos:/NN/;word:/(?i:involvement|implication|participation)/}=N0
+Cond_1 : {}=N0 >/(nmod:of|nmod:poss|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:in/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+####X participates in Y######
+RuleID : involvement_in_3
+Cond_1 : {pos:/(VBZ|VBD)/;lemma:participate}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:in/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+
+######X plays/has a role in Y########
+RuleID : involvement_role_1
+Cond_1 : {lemma:/(play|has|have|had)/}=N2
+Cond_1 : {}=N2 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N2 >/dobj/ {lemma:role}=N0
+Cond_3 : {}=N2 >/nmod:in/ {}=N3
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N3
+
+######X has a role in Y; alt########
+RuleID : involvement_role_2
+Cond_1 : {tag:/VB.*/;lemma:/(has|have|had)/}=N2
+Cond_1 : {}=N2 >/dobj/ {lemma:role}=N0
+Cond_2 : {}=N2 >/(nsubj|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:in/ {}=N3
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N3
+
+####Role of/for X in Y######
+RuleID : involvement_in_3
+Cond_1 : {lemma:role}=N0
+Cond_1 : {}=N0 >/(nmod:of|nmod:poss|nmod:for|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:in/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+####X required for/in Y######
+RuleID : involvement_for_1
+Cond_1 : {pos:/VBN/;lemma:/(need|require)/}=N0
+Cond_1 : {}=N0 >/(nsubjpass|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:(for|in)/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+####X important for/in Y######
+RuleID : involvement_for_2
+Cond_1 : {pos:/(JJ|NN)/;lemma:/(important|necessary|indispensable|sufficient|responsible|requisite|prerequisite|essential|critical|crucial)/}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:(for|in)/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
+
+
+######X has an effect on Y########
+RuleID : involvement_on_1
+Cond_1 : {lemma:/(has|have|had)/}=N2
+Cond_1 : {}=N2 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N2 >/dobj/ {lemma:/(effect|influence)/}=N0
+Cond_3 : {}=N2 >/nmod:on/ {}=N3
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N3
+
+######X has an effect on Y; alt########
+RuleID : involvement_on_2
+Cond_1 : {tag:/VB.*/;lemma:/(has|have|had)/}=N2
+Cond_2 : {}=N2 >/dobj/ {lemma:/(effect|influence)/}=N0
+Cond_2 : {}=N2 >/(nsubj|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >/nmod:on/ {}=N3
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N3
+
+####Effect of X on Y######
+RuleID : involvement_on_3
+Cond_1 : {lemma:/(effect|influence)/}=N0
+Cond_1 : {}=N0 >/(nmod:of|nmod:poss|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >/nmod:on/ {}=N2
+Action_1 : N0 >> arg0_inv >> N1
+Action_2 : N0 >> arg1_inv >> N2
