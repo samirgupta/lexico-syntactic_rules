@@ -1,0 +1,27 @@
+####ARG0 edges for PTM
+
+####X's PTM####
+RuleID : ptm_its_1
+Cond_1 :  {lemma:/(phosphorylation|ubiquitination|acetylation|glycosylation|neddylation|sumoylation)/}=N0
+Cond_2 : {}=N0 >/nmod:poss/ {}=N1
+Action_1 : N0 >> arg0_ptm >> N1
+
+
+####PTM of X####
+RuleID : ptm_modifier_1
+Cond_1 : {lemma:/(phosphorylation|ubiquitination|acetylation|glycosylation|neddylation|sumoylation)/}=N0
+Cond_2 : {}=N0 >/(nmod:of)/ {}=N1
+Action_1 : N0 >> arg0_ptm >> N1
+
+####X PTM####
+RuleID : ptm_modifier_2
+Cond_1 : {lemma:/(phosphorylation|ubiquitination|acetylation|glycosylation|neddylation|sumoylation)/}=N0
+Cond_2 : {}=N0 >compound {}=N1
+Cond_3 : {}=N0 !>/(nmod:of)/ {}
+Action_1 : N0 >> arg0_ptm >> N1
+
+####X was PTM####
+RuleID : ptm_nsubjpass_1
+Cond_1 :  {lemma:/(phosphorylate|ubiquitinate|acetylate|glycosylate|neddylate|sumoylate)/}=N0
+Cond_2 : {}=N0 >/(nsubjpass|dobj)/ {}=N1
+Action_1 : N0 >> arg0_ptm >> N1
