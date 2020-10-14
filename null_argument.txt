@@ -1,0 +1,34 @@
+RuleID : null_advcl_by_VBG
+Cond_0 : {pos:/VB.*/}=N0
+Cond_1 : {}=N0 >mark {word:/by|in/}
+Cond_1 : {}=N1 >advcl  {}=N0
+Cond_2 : {}=N1 >/(nsubj|nsubjpass|nmod:agent)/  {}=N2
+Cond_3 : {}=N0 !> /(nsubj|nsubjpass|nmod:agent)/ {}
+Action_1 : N0 >> nsubj_null >> N2
+
+RuleID : null_advcl_to_VB
+Cond_0 : {pos:/VB.*/}=N0
+Cond_1 : {}=N0 >mark {word:to}
+Cond_1 : {}=N1 >advcl  {}=N0
+Cond_2 : {}=N1 >/(nsubj|nsubjpass|nmod:agent)/  {}=N2
+Cond_3 : {}=N0 !> /(nsubj|nsubjpass|nmod:agent)/ {}
+Cond_4 : {}=N1 >/dobj/ {}=N3
+Action_1 : N0 >> arg0_null_nsubj >> N2
+Action_1 : N0 >> arg0_null_dobj >> N3
+
+RuleID : null_nmod_via_NN_1
+Cond_0 : {pos:/NN.*/}=N0
+Cond_1 : {tag:/VB.*/}=N1 >/nmod:(via|through)/ {}=N0
+Cond_2 : {}=N1 >/(nsubj|nsubjpass|nmod:agent)/  {}=N2
+Cond_3 : {}=N0 !> /(nsubj|nsubjpass|nmod:agent)/ {}
+Cond_4 : {}=N0 !> /(nmod:of|compound)/ {}
+Action_1 : N0 >> nsubj_null >> N2
+
+RuleID : null_nmod_via_NN_2
+Cond_0 : {pos:/NN.*/}=N0
+Cond_1 : {tag:/VB.*/}=N1 >/nmod:(via|through)/ {}=N0
+Cond_2 : {}=N1 >/(nsubj|nsubjpass|nmod:agent)/  {}=N2
+Cond_3 : {}=N0 !> /(nsubj|nsubjpass|nmod:agent)/ {}
+Cond_4 : {}=N0 > /(nmod:of|compound)/ {}=N3
+Action_1 : N0 >> nsubj_null >> N2
+Action_1 : N0 >> dobj_null >> N3
