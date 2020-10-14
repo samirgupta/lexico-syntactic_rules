@@ -1,0 +1,57 @@
+####ARG0 edges for movement
+
+####X's movement####
+RuleID : mov_its_1
+Cond_1 :  {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation)/}=N0
+Cond_2 : {}=N0 >/nmod:poss/ {}=N1
+Action_1 : N0 >> arg0_mov >> N1
+
+
+####movement of X####
+RuleID : mov_modifier_1
+Cond_1 : {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation)/}=N0
+Cond_2 : {}=N0 >/(nmod:of)/ {}=N1
+Action_1 : N0 >> arg0_mov >> N1
+
+####X movement####
+RuleID : mov_modifier_2
+Cond_1 : {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation)/}=N0
+Cond_2 : {}=N0 >compound {}=N1
+Cond_3 : {}=N0 !>/(nmod:of)/ {}
+Action_1 : N0 >> arg0_mov >> N1
+
+####X was moved####
+RuleID : mov_nsubjpass_1
+Cond_1 :  {lemma:/(localize|translocate|traffic|transport|import|export|relocalize|accumulate)/}=N0
+Cond_2 : {}=N0 >nsubjpass {}=N1
+Action_1 : N0 >> arg0_mov >> N1
+
+####X moved to Y####
+RuleID : mov_nsubj_1
+Cond_1 :  {lemma:/(localize|translocate|traffic|transport|import|export|relocalize|accumulate)/}=N0
+Cond_2 : {}=N0 >nsubj {}=N1
+Cond_3 : {}=N0 !>dobj {}
+Action_1 : N0 >> arg0_mov >> N1
+
+####ARG1 edges for movement
+
+####movement to|into|at Y####
+RuleID : movement_to_1
+Cond_1 : {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation|localize|translocate|traffic|relocalize|accumulate)/}=N0
+Cond_2 : {}=N0 >/(nmod:to|nmod:into|nmod:at|nmod:on|nmod:in)/ {}=N1
+Action_1 : N0 >> arg1_mov >> N1
+
+####Y_JJ movement####
+RuleID : JJ_movement_1
+Cond_1 : {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation)/}=N0
+Cond_2 : {}=N0 >/(amod)/ {}=N1
+Cond_3 : {}=N0 !>/(nmod:to|nmod:into|nmod:at|nmod:on|nmod:in)/ {}
+Action_1 : N0 >> arg1_mov >> N1
+
+####Y_NN movement####
+RuleID : NN_movement_1
+Cond_1 : {lemma:/(localization|translocation|trafficking|transport|import|export|relocalization|accumulation)/}=N0
+Cond_2 : {}=N0 >/(compound)/ {}=N1
+Cond_3 : {}=N0 >/(nmod:of|nmod:poss)/ {}=N2
+Cond_4 : {}=N0 !>/(nmod:to|nmod:into|nmod:at|nmod:on|nmod:in)/ {}
+Action_1 : N0 >> arg1_mov >> N1
