@@ -1,22 +1,3 @@
-###Before|after,upon vbg fix
-RuleID : advcl_to_nmod_before
-Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
-Cond_2 : {}=N1 >mark {lemma:before}
-Action_1 : N0 >> nmod:before >> N1
-
-###Before|after,upon vbg fix
-RuleID : advcl_to_nmod_after
-Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
-Cond_2 : {}=N1 >mark {lemma:after}
-Action_1 : N0 >> nmod:after >> N1
-
-###Before|after,upon vbg fix
-RuleID : advcl_to_nmod_upon
-Cond_1 : {}=N0 >advcl {pos:/VB.*/}=N1
-Cond_2 : {}=N1 >mark {lemma:upon}
-Action_1 : N0 >> nmod:upon >> N1
-
-
 ####E1 after E2
 RuleID : temporal_after_1
 Cond_1 : {}=N2 >/nmod:after|nmod:upon/ {}=N1
@@ -70,13 +51,6 @@ Cond_2 : {}=N0 > /mark|advmod/ {lemma:thereby}=N3
 Action_1 : N3 >> arg0_tmp >> N1
 Action_2 : N3 >> arg1_tmp >> N0
 
-####E1 leading to E2
-RuleID : temporal_leading_to_2
-Cond_0 : {}=N1 >dobj {}=N3
-Cond_1 : {}=N3 >/acl/ {lemma:lead;pos:VBG}=N0
-Cond_2 : {}=N0 >/nmod:to/ {}=N2
-Action_1 : N0 >> arg0_tmp >> N1
-Action_2 : N0 >> arg1_tmp >> N2
 
 ####E1 resulting in E2
 RuleID : temporal_leading_to_3
