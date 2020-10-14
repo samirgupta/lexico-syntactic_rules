@@ -1,0 +1,60 @@
+####X interacts######
+RuleID :  interacts_arg0_nsubj
+Cond_1 : {pos:/VB.*/;lemma:/(bind|interact|associate|dimerize|co-immunoprecipitate|coimmunoprecipitate|hetrodimerize|recruit)/}=N0
+Cond_2 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Action_1 : N0 >> arg0_int >> N1
+
+####its interaction####
+RuleID : interacts_arg0_nmod_poss
+Cond_1 : {lemma:/(affinity|association|binding|interaction|dissociation|release|dimerization|recruitment|complex)/}=N0
+Cond_2 : {}=N0 >/nmod:poss/ {word:/(its|their)/}=N1
+Action_1 : N0 >> arg0_int >> N1
+
+
+####interaction of X####
+RuleID : interacts_arg0_nmod_of
+Cond_1 : {lemma:/(affinity|association|binding|interaction|dissociation|release|dimerization|recruitment|complex)/}=N0
+Cond_2 : {}=N0 >/(nmod:of)/ {}=N1
+Cond_2 : {}=N0 !>/compound/ {}
+Action_1 : N0 >> arg0_int >> N1
+
+
+####X interaction####
+RuleID : interacts_arg0_compound
+Cond_1 : {lemma:/(affinity|association|binding|interaction|dissociation|release|dimerization|recruitment|complex)/}=N0 >/compound|nsubj_null/ {}=N1
+Cond_2 : {}=N0 !>/(nmod:of)/ {}
+Action_1 : N0 >> arg0_int >> N1
+
+
+####interacts Y######
+RuleID :  interacts_arg1_dobj
+Cond_1 : {pos:/VB.*/;lemma:/(bind|associate|dimerize|co-immunoprecipitate|coimmunoprecipitate|hetrodimerize|recruit)/}=N0
+Cond_2 : {}=N0 >/(dobj)/ {}=N1
+Action_1 : N0 >> arg1_int >> N1
+
+
+####interaction with#####
+RuleID : interacts/interaction_arg1_nmod_with
+Cond_1 : {lemma:/(bind|interact|associate|dimerize|co-immunoprecipitate|coimmunoprecipitate|hetrodimerize|binding|interaction|association|dimerization|co-immunoprecipitation|coimmunoprecipitation|hetrodimerization|recruitment)/}=N0
+Cond_2 : {}=N0 >/(nmod:with)/ {}=N1
+Action_1 : N0 >> arg1_int >> N1
+
+####interaction to#####
+RuleID : interacts_interaction_arg1_nmod_to
+Cond_1 : {lemma:/(bind|associate|affinity|binding|interaction|association|dimerization|hetrodimerization|recruitment)/}=N0
+Cond_2 : {}=N0 >/(nmod:to)/ {}=N1
+Action_1 : N0 >> arg1_int >> N1
+
+####affinity for####
+RuleID : affinity_arg1_nmod_for
+Cond_1 : {lemma:affinity}=N0
+Cond_2 : {}=N0 >/(nmod:for)/ {}=N1
+Action_1 : N0 >> arg1_int >> N1
+
+####interaction between X and Y#####
+RuleID : interaction_between_1
+Cond_1 : {lemma:/(binding|interaction|affinity|association)/}=N0
+Cond_2 : {}=N0 >/(nmod:between|nmod:between_cov)/ {}=N1
+Cond_3 : {}=N1 >/conj:and/ {}=N2
+Action_1 : N0 >> arg0_int >> N1
+Action_2 : N0 >> arg1_int >> N2
