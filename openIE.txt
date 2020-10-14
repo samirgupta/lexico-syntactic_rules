@@ -1,0 +1,39 @@
+########active verb form########
+RuleID : openIE_active_1
+Cond_0 : {tag:/VB.*/}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubj_null)/ {}=N1
+Cond_2 : {}=N0 >dobj {}=N2
+Action_1 : N0 >> arg0_opn >> N1
+Action_2 : N0 >> arg1_opn >> N2
+
+########passive verb form########
+RuleID : openIE_passive_1
+Cond_1 : {tag:/VB.*/}=N0
+Cond_2 : {}=N0 >/(nmod:agent|nsubj_null)/ {}=N1
+Cond_3 : {}=N0 >nsubjpass {}=N2
+Action_1 : N0 >> arg0_opn >> N1
+Action_2 : N0 >> arg1_opn >> N2
+
+########nominalized verb form########
+RuleID : openIE_nominalized_1
+Cond_1 : {tag:/NN/}=N0
+Cond_2 : {}=N0 >/nmod:by/ {}=N1
+Cond_3 : {}=N0 >/nmod:of|compound|nmod:poss/ {}=N2
+Action_1 : N0 >> arg0_opn >> N1
+Action_2 : N0 >> arg1_opn >> N2
+
+########openIE verb prep form########
+RuleID : openIE_verb_prep_1
+Cond_0 : {tag:/VB.*/}=N0
+Cond_1 : {}=N0 >/(nsubj|nsubjpass|nsubj_null)/=R2 {}=N1
+Cond_2 : {}=N0 >/nmod:(in|for|with|on|to)/=R1 {}=N2
+Action_1 : N0 >> arg0_opn_R2 >> N1
+Action_2 : N0 >> arg1_opn_R1 >> N2
+
+########Reduced relative clause:active########
+#RuleID : openIE_redrcl_1
+#Cond_0 : {tag:/VB.*/}=N0
+#Cond_1 : {}=N0 <acl {tag:/(NN|NNS)/}=N1
+#Cond_2 : {}=N0 >dobj {}=N2
+#Action_1 : N0 >> arg0_opn >> N1
+#Action_2 : N0 >> arg1_opn >> N2
